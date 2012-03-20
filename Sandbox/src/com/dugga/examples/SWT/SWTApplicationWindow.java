@@ -1,5 +1,7 @@
 package com.dugga.examples.SWT;
 
+import java.awt.Dialog;
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -19,6 +21,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.jface.viewers.TableTreeViewer;
+import org.eclipse.jface.window.Window;
 
 public class SWTApplicationWindow {
 
@@ -136,6 +139,12 @@ public class SWTApplicationWindow {
 		btnSelectDate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				DateselectionDialog dateSelectionDialog = new DateselectionDialog(shell);
+				dateSelectionDialog.create();
+				dateSelectionDialog.createDialogArea(shell);
+				if (dateSelectionDialog.open() == Window.OK) {
+					dateTime = dateSelectionDialog.getSelectedDate();
+				}
 			}
 		});
 		btnSelectDate.setText("Select Date");
