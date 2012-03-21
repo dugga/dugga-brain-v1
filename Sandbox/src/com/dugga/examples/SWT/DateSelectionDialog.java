@@ -12,11 +12,15 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 
-public class DateselectionDialog extends Dialog {
+public class DateSelectionDialog extends Dialog {
 	private DateTime calender;
 	private DateTime selectedDate;
+	private int selectedYear;
+	private int selectedMonth;
+	private int selectedDay;
 	
-	public DateselectionDialog(Shell shell) {
+	
+	public DateSelectionDialog(Shell shell) {
 		super(shell);
 	}
 	
@@ -35,23 +39,36 @@ public class DateselectionDialog extends Dialog {
 		gridLayout.numColumns = 1;
 		composite.setLayout(gridLayout);
 		calender = new DateTime(composite, SWT.CALENDAR);
+		calender.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (e.getSource() instanceof DateTime) {
+					selectedDate = (DateTime)e.getSource();
+					}
+			}
+		});
 		
 		return composite;
 	}
 	
 	@Override
 	protected void okPressed() {
-		saveInput();
+		selectedYear = selectedDate.getYear();
+		selectedMonth = selectedDate.getMonth();
+		selectedDay = selectedDate.getDay();
 		super.okPressed();
 	}
 
-
-	private void saveInput() {
-		selectedDate = calender;
-		
+	public int getSelectedYear() {
+		return selectedYear;
 	}
 
-	public DateTime getSelectedDate() {
-		return selectedDate;
+	public int getSelectedMonth() {
+		return selectedMonth;
 	}
+
+	public int getSelectedDay() {
+		return selectedDay;
+	}
+
 }

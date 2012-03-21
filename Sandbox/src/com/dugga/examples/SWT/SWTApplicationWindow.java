@@ -1,7 +1,5 @@
 package com.dugga.examples.SWT;
 
-import java.awt.Dialog;
-
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -139,11 +137,11 @@ public class SWTApplicationWindow {
 		btnSelectDate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				DateselectionDialog dateSelectionDialog = new DateselectionDialog(shell);
+				DateSelectionDialog dateSelectionDialog = new DateSelectionDialog(shell);
 				dateSelectionDialog.create();
 				dateSelectionDialog.createDialogArea(shell);
 				if (dateSelectionDialog.open() == Window.OK) {
-					dateTime = dateSelectionDialog.getSelectedDate();
+					dateTime.setDate(dateSelectionDialog.getSelectedYear(), dateSelectionDialog.getSelectedMonth(), dateSelectionDialog.getSelectedDay());
 				}
 			}
 		});
