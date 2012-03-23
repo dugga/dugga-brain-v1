@@ -11,23 +11,16 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.window.Window;
 
 public class SWTApplicationWindow {
 
-	protected Shell shell;
-	private Text text;
-	private Text text_1;
+	protected Shell sampleShell;
 	private DateTime dateTime;
-
+	private Label statusLabel;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -47,9 +40,10 @@ public class SWTApplicationWindow {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		sampleShell.pack();
+		sampleShell.open();
+		sampleShell.layout();
+		while (!sampleShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -60,103 +54,85 @@ public class SWTApplicationWindow {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
-		GridLayout gl_shell = new GridLayout();
-		shell.setLayout(gl_shell);
+		sampleShell = new Shell();
+		sampleShell.setSize(514, 245);
+		sampleShell.setText("Sample Window with selection Dialog");
+		GridLayout gl_sampleShell = new GridLayout();
+		sampleShell.setLayout(gl_sampleShell);
 		
-		Menu menu = new Menu(shell, SWT.BAR);
-		shell.setMenuBar(menu);
+		Menu topMenuBar = new Menu(sampleShell, SWT.BAR);
+		sampleShell.setMenuBar(topMenuBar);
 		
-		MenuItem mntmFile = new MenuItem(menu, SWT.CASCADE);
-		mntmFile.setText("File");
+		MenuItem fileMenuItem = new MenuItem(topMenuBar, SWT.CASCADE);
+		fileMenuItem.setText("File");
 		
-		Menu menu_1 = new Menu(mntmFile);
-		mntmFile.setMenu(menu_1);
+		Menu exitMenu = new Menu(fileMenuItem);
+		fileMenuItem.setMenu(exitMenu);
 		
-		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
-		mntmExit.addSelectionListener(new SelectionAdapter() {
+		MenuItem exitMenuItem = new MenuItem(exitMenu, SWT.NONE);
+		exitMenuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				MessageBox fileExitMessageBox = new MessageBox(shell);
+				MessageBox fileExitMessageBox = new MessageBox(sampleShell);
 				fileExitMessageBox.setText("Exit");
 				fileExitMessageBox.setMessage("File/Exit selected");
 				fileExitMessageBox.open();
 			}
 		});
-		mntmExit.setText("Exit");
+		exitMenuItem.setText("Exit");
 		
-		MenuItem mntmHelp_1 = new MenuItem(menu, SWT.CASCADE);
-		mntmHelp_1.setText("Help");
+		MenuItem helpMenuItem = new MenuItem(topMenuBar, SWT.CASCADE);
+		helpMenuItem.setText("Help");
 		
-		Menu menu_2 = new Menu(mntmHelp_1);
-		mntmHelp_1.setMenu(menu_2);
+		Menu aboutMenu = new Menu(helpMenuItem);
+		helpMenuItem.setMenu(aboutMenu);
 		
-		MenuItem mntmHelp = new MenuItem(menu_2, SWT.NONE);
-		mntmHelp.addSelectionListener(new SelectionAdapter() {
+		MenuItem aboutMenuItem = new MenuItem(aboutMenu, SWT.NONE);
+		aboutMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageBox helpMessage = new MessageBox(shell);
+				MessageBox helpMessage = new MessageBox(sampleShell);
 				helpMessage.setText("About");
 				helpMessage.setMessage("Just a test of an applicaiton window.");
 				helpMessage.open();		
 			}
 		});
-		mntmHelp.setText("Help");
+		aboutMenuItem.setText("About");
 		
-		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setLayout(new GridLayout(3, false));
+		Label separatorLabel = new Label(sampleShell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		separatorLabel.setLayoutData(new GridData(SWT.FILL , SWT.BOTTOM, true, false, 1, 1));
 		
-		Label lblUserProfile = new Label(composite, SWT.NONE);
-		lblUserProfile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblUserProfile.setText("User Profile:");
+		Composite dateComposite = new Composite(sampleShell, SWT.NONE);
+		dateComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		dateComposite.setLayout(new GridLayout(3, false));
 		
-		text = new Text(composite, SWT.BORDER);
-		text.addVerifyListener(new VerifyListener() {
-			public void verifyText(VerifyEvent arg0) {
-			}
-		});
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(composite, SWT.NONE);
+		Label selectDateLabel = new Label(dateComposite, SWT.NONE);
+		selectDateLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		selectDateLabel.setText("Select a Date:");
 		
-		Label lblPassword = new Label(composite, SWT.NONE);
-		lblPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPassword.setText("Password:");
+		dateTime = new DateTime(dateComposite, SWT.BORDER);
+		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(composite, SWT.NONE);
-		
-		Label lblStartDate = new Label(composite, SWT.NONE);
-		lblStartDate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblStartDate.setText("Start Date:");
-		
-		dateTime = new DateTime(composite, SWT.BORDER);
-		
-		Button btnSelectDate = new Button(composite, SWT.NONE);
-		btnSelectDate.addSelectionListener(new SelectionAdapter() {
+		Button selectDateButton = new Button(dateComposite, SWT.NONE);
+		selectDateButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		selectDateButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				DateSelectionDialog dateSelectionDialog = new DateSelectionDialog(shell);
+				DateSelectionDialog dateSelectionDialog = new DateSelectionDialog(sampleShell);
 				dateSelectionDialog.create();
-				dateSelectionDialog.createDialogArea(shell);
+				dateSelectionDialog.createDialogArea(sampleShell);
 				if (dateSelectionDialog.open() == Window.OK) {
 					dateTime.setDate(dateSelectionDialog.getSelectedYear(), dateSelectionDialog.getSelectedMonth(), dateSelectionDialog.getSelectedDay());
+					statusLabel.setText("OK pressed");
+				} else {
+					statusLabel.setText("Cancel pressed");
 				}
 			}
 		});
-		btnSelectDate.setText("Select Date");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+		selectDateButton.setText("Select Date");
+		new Label(sampleShell, SWT.NONE);
 		
-		Button btnShowResults = new Button(composite, SWT.NONE);
-		btnShowResults.setText("Show Results");
-		
-		TableTreeViewer tableTreeViewer = new TableTreeViewer(shell, SWT.BORDER | SWT.FULL_SELECTION);
-		TableTree tableTree = tableTreeViewer.getTableTree();
-		tableTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		statusLabel = new Label(sampleShell, SWT.BORDER);
+		statusLabel.setLayoutData(new GridData(SWT.FILL , SWT.BOTTOM, true, true, 1, 1));
 	}
+
 }

@@ -5,12 +5,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
+
+/**
+ * @author davie
+ *    Produces a calendar for selection.
+ *    Must pass back primitive types, so here we set int types for year, month, day
+ *     
+ */
 
 public class DateSelectionDialog extends Dialog {
 	private DateTime calender;
@@ -24,12 +29,6 @@ public class DateSelectionDialog extends Dialog {
 		super(shell);
 	}
 	
-	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-		super.create();
-	}
-
 	public Control createDialogArea(Composite parent) {
 		
 		Composite composite = (Composite)super.createDialogArea(parent);
@@ -53,9 +52,15 @@ public class DateSelectionDialog extends Dialog {
 	
 	@Override
 	protected void okPressed() {
-		selectedYear = selectedDate.getYear();
-		selectedMonth = selectedDate.getMonth();
-		selectedDay = selectedDate.getDay();
+		if (selectedDate != null) {
+			selectedYear = selectedDate.getYear();
+			selectedMonth = selectedDate.getMonth();
+			selectedDay = selectedDate.getDay();
+		} else {
+			selectedYear = calender.getYear();
+			selectedMonth = calender.getMonth();
+			selectedDay = calender.getDay();
+		}
 		super.okPressed();
 	}
 
