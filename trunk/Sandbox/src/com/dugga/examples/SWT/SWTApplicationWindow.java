@@ -129,8 +129,7 @@ public class SWTApplicationWindow {
 			}
 		});
 		selectDateButton.setText("Select Date");
-		new Label(sampleShell, SWT.NONE);
-		
+				
 		statusLabel = new Label(sampleShell, SWT.BORDER);
 		statusLabel.setLayoutData(new GridData(SWT.FILL , SWT.BOTTOM, true, true, 1, 1));
 	}
