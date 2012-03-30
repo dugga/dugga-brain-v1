@@ -1,4 +1,4 @@
-package com.dugga.examples.SWT.IBMi.core;
+package com.dugga.examples.SWT.IBMi.core.connections;
 
 import java.io.FileOutputStream;
 import java.util.Enumeration;
@@ -8,8 +8,8 @@ import com.ibm.as400.access.AS400;
 public class MyConnection {
 	private Properties properties;
 	private String system;
-	private String userProfile;
-	private String userPassword;
+	private String userName;
+	private String password;
 
 	public MyConnection(Properties properties) {
 		super();
@@ -18,8 +18,8 @@ public class MyConnection {
 
 	public void load(Properties props) {
 		system = props.getProperty("system", "SYSTEM");
-		userProfile = props.getProperty("userProfile", "USER");
-		userPassword = props.getProperty("userPassword", "PASSWORD");
+		userName = props.getProperty("userName", "USERNAME");
+		password = props.getProperty("password", "PASSWORD");
 		properties = props;
 	}
 	
@@ -28,11 +28,11 @@ public class MyConnection {
 		if (system != null) {
 			props.setProperty("system", system);
 		}
-		if (userProfile != null) {
-			props.setProperty("userProfile", userProfile);
+		if (userName != null) {
+			props.setProperty("userName", userName);
 		}
-		if (userPassword != null) {
-			props.setProperty("userPassword", userPassword);
+		if (password != null) {
+			props.setProperty("password", password);
 		}
 		Enumeration<?> enumeration = properties.propertyNames();
 		while(enumeration.hasMoreElements()) {

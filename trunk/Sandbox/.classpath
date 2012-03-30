@@ -14,6 +14,6 @@
 	<classpathentry kind="lib" path="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.jface_3.7.0.I20110522-1430.jar" sourcepath="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.jface_3.7.0.I20110522-1430.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.swt.win32.win32.x86_3.7.1.v3738a.jar" sourcepath="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.swt.win32.win32.x86_3.7.1.v3738a.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.text_3.5.101.r371_v20110810-0800.jar" sourcepath="C:/Program Files/baseEclipse37/eclipse/plugins/org.eclipse.text_3.5.101.r371_v20110810-0800.jar"/>
-
+	<classpathentry kind="lib" path="C:/qtemp/JT400/lib/jt400.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
