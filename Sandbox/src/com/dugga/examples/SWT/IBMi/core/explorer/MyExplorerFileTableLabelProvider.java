@@ -6,12 +6,12 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import com.dugga.examples.SWT.IBMi.core.utility.Util;
+
 public class MyExplorerFileTableLabelProvider implements ITableLabelProvider {
 
 	@Override
-	public void addListener(ILabelProviderListener arg0) {
-		// TODO Auto-generated method stub
-
+	public void addListener(ILabelProviderListener iLableProviderListener) {
 	}
 
 	@Override
@@ -28,13 +28,26 @@ public class MyExplorerFileTableLabelProvider implements ITableLabelProvider {
 	}
 
 	@Override
-	public Image getColumnImage(Object arg0, int arg1) {
-		return null;
+	public Image getColumnImage(Object obj, int columnIndex) {
+		if (columnIndex != 0) {
+			return null;
+		}
+		if (((File)obj).isDirectory()) {
+			return Util.getImageRegistry().get("folder");
+		} else {
+			return Util.getImageRegistry().get("file");
+		}
 	}
 
 	@Override
-	public String getColumnText(Object obj, int i) {
-		return ((File)obj).getName();
+	public String getColumnText(Object obj, int columnIndex) {
+		if (columnIndex == 0) {
+			return ((File)obj).getName();
+		}
+		if (columnIndex == 1) {
+			return "" + ((File)obj).length();
+		}
+		return "";
 	}
 
 }
