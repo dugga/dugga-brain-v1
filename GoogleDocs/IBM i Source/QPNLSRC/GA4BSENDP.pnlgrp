@@ -1,0 +1,57 @@
+.*/*-----------------------------------------------------------------*/
+.*/*  Create Instructions:                                           */
+.*/*                                                                 */
+.*/* CRTPNLGRP PNLGRP(GA4BSENDP) SRCFILE(QPNLSRC)                    */
+.*/*-----------------------------------------------------------------*/
+
+:pnlgrp.
+
+.*command help text
+
+:help name='GA4BSEND'.
+GA4BSEND - Help
+:P.
+The GA4BSEND command allows you to interface with a specified Google
+Apps account and send a document (CSV, PDF, etc..) to the user's Google Drive
+directory.
+:ehelp.
+
+.*command parameters help text
+:help name='GA4BSEND/EMAIL'.
+Email (EMAIL) - Help
+:xh3.Email (EMAIL)
+:P.
+Specify the Google Account email address to use when sending the document.
+:P.
+The email must already exist as a Google Apps account and is a required
+parameter.
+:lines.
+Example: :hp2.'MyAccount@Gmail.com':ehp2.
+:elines.
+:ehelp.
+
+:help name='GA4BSEND/PASSWORD'.
+Password (PASSWORD) - Help
+:xh3.Password (PASSWORD)
+:P.
+Specify the Google Account password for the email address of the Google Apps
+account.
+:P.
+The password is a required parameter but is not displayed for security purposes.
+:ehelp.
+
+:help name='GA4BSEND/DOCUMENT'.
+Document (DOCUMENT) - Help
+:xh3.Document (DOCUMENT)
+:P.
+Specifies the document name to be sent.
+:ehelp.
+
+:help name='GA4BSEND/DIRECTORY'.
+Directory (DIRECTORY) - Help
+:xh3.Directory (DIRECTORY)
+:P.
+Specifies the directory in the IFS the Document will be sent from.
+:ehelp.
+:epnlgrp.
+

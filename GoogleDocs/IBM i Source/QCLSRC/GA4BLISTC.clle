@@ -1,0 +1,30 @@
+/* *-----------------------------------------------------------------*/
+/* *  Create Instructions:                                           */
+/* *                                                                 */
+/* *  CRTBNDCL PGM(*LIBL/GA4BLISTC) SRCFILE(QCLSRC)                  */
+/* *-----------------------------------------------------------------*/
+             PGM        PARM(&EMAIL &PASSWORD &DOCUMENT &DIRECTORY)
+
+/*   program variables                                              */
+             DCL        VAR(&EMAIL) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&PASSWORD) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&DIRECTORY) TYPE(*CHAR) LEN(128)
+             DCL        VAR(&DOCUMENT) TYPE(*CHAR) LEN(128)
+             DCL        VAR(&IBMINAME) TYPE(*CHAR) LEN(8)
+
+/*   set JAVA CLASSPATH to point to our created JAR file            */
+             ADDENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar') REPLACE(*YES)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+                CHGENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar')
+                MONMSG     MSGID(CPF0000)
+             ENDDO
+
+/*   get system name                                                */
+             RTVNETA    SYSNAME(&IBMINAME)
+             MONMSG     MSGID(CPF0000)
+
+/*   call get GA4B List documents API process                */
+             CALL       PGM(GA4BLISTR) PARM(&EMAIL &PASSWORD &DOCUMENT &DIRECTORY &IBMINAME)
+
+             ENDPGM
+

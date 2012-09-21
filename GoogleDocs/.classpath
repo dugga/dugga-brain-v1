@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="lib" path="Required Jars/google-collect-1.0-rc1.jar"/>
+	<classpathentry kind="lib" path="Required Jars/gdata-client-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Qtemp/IBM/jt400.jar"/>
+	<classpathentry kind="lib" path="Required Jars/gdata-docs-3.0.jar"/>
+	<classpathentry kind="lib" path="Required Jars/gdata-docs-meta-3.0.jar"/>
+	<classpathentry kind="lib" path="Required Jars/activation.jar"/>
+	<classpathentry kind="lib" path="Required Jars/gdata-calendar-2.0.jar"/>
+	<classpathentry kind="lib" path="Required Jars/gdata-calendar-meta-2.0.jar"/>
+	<classpathentry kind="lib" path="Required Jars/google-api-client-1.6.0-beta.jar"/>
+	<classpathentry kind="lib" path="Required Jars/google-http-client-1.6.0-beta.jar"/>
+	<classpathentry kind="lib" path="Required Jars/google-oauth-client-1.6.0-beta.jar"/>
+	<classpathentry kind="lib" path="Required Jars/jsr305.jar"/>
+	<classpathentry kind="lib" path="Required Jars/jt400.jar"/>
+	<classpathentry kind="lib" path="Required Jars/mail.jar"/>
+	<classpathentry kind="lib" path="Required Jars/servlet-api.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
