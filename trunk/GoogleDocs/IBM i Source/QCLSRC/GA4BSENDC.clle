@@ -1,0 +1,25 @@
+/**-----------------------------------------------------------------*/
+/**  Create Instructions:                                           */
+/**                                                                 */
+/**  CRTBNDCL PGM(*LIBL/GA4BSENDC) SRCFILE(QCLSRC)                  */
+/**-----------------------------------------------------------------*/
+             PGM        PARM(&EMAIL &PASSWORD &DOCUMENT &DIRECTORY)
+
+/*   program variables                                              */
+             DCL        VAR(&EMAIL) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&PASSWORD) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&DIRECTORY) TYPE(*CHAR) LEN(128)
+             DCL        VAR(&DOCUMENT) TYPE(*CHAR) LEN(128)
+
+/*   set JAVA CLASSPATH to point to our created JAR file            */
+             ADDENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar') REPLACE(*YES)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+                CHGENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar')
+                MONMSG     MSGID(CPF0000)
+             ENDDO
+
+/*   call get Google Apps Send documents API process                */
+             CALL       PGM(GA4BSENDR) PARM(&EMAIL &PASSWORD &DOCUMENT &DIRECTORY)
+
+             ENDPGM
+

@@ -1,0 +1,59 @@
+.* /*-----------------------------------------------------------------*/
+.* /*  Create Instructions:                                           */
+.* /*                                                                 */
+.* /*  CRTPNLGRP PNLGRP(GA4BLISTP) SRCFILE(QPNLSRC)                   */
+.* /*-----------------------------------------------------------------*/
+
+:pnlgrp.
+
+.* command help text
+
+:help name='GA4BLIST'.
+GA4BLIST - Help
+:P.
+The GA4BLIST command allows you to interface with a specified Google
+Apps account and retrieve a list of documents for the user storing the list
+in an IFS directory.
+:ehelp.
+
+.* command parameters help text
+:help name='GA4BLIST/EMAIL'.
+Email (EMAIL) - Help
+:xh3.Email (EMAIL)
+:P.
+Specify the Google Account email address to use when retrieving the list of
+documents.
+:P.
+The email must already exist as a Google Apps account and is a required
+parameter.
+:lines.
+Example: :hp2.'MyAccount@Gmail.com':ehp2.
+:elines.
+:ehelp.
+
+:help name='GA4BLIST/DOCUMENT'.
+Document (DOCUMENT) - Help
+:xh3.Document (DOCUMENT)
+:P.
+Specifies the list document name to be created.
+:ehelp.
+
+:help name='GA4BLIST/DIRECTORY'.
+Directory (DIRECTORY) - Help
+:xh3.Directory (DIRECTORY)
+:P.
+Specifies the directory in the IFS the list document will be
+created in.
+:ehelp.
+
+:help name='GA4BLIST/PASSWORD'.
+Password (PASSWORD) - Help
+:xh3.Password (PASSWORD)
+:P.
+Specify the Google Account password for the email address of the Google Apps
+account.
+:P.
+The password is a required parameter but is not displayed for security purposes.
+:ehelp.
+:epnlgrp.
+
