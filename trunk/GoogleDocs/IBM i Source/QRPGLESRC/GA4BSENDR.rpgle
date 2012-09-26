@@ -15,7 +15,7 @@
 
      D main            PR                  STATIC
      D                                     EXTPROC(*JAVA
-     D                                        : 'com.csdainc.gfi.GA4BSENDJ'
+     D                                        : 'com.csdainc.gfi.GA4BSendJ'
      D                                        : 'main')
      D                                 O   CLASS(*JAVA:'java.lang.String')
      D                                     DIM(4)
