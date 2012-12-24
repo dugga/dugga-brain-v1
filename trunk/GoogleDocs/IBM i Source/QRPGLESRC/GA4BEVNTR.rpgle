@@ -30,7 +30,7 @@
      D                                     CLASS(
      D                                       *JAVA:
      D                                       'java.lang.String')
-     D bytes                         50A    CONST VARYING
+     D bytes                       1024A    CONST VARYING
 
      Dargs             S               O   CLASS(
      D                                       *JAVA:
