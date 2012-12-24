@@ -1,0 +1,40 @@
+             PGM        PARM(&EMAIL &PASSWORD &TITLE &DESC &STRDT &STRTM &ENDDT &ENDTM &REM &REMMIN &LOC)
+
+/* program variables */
+             DCL        &email     *CHAR 256
+             DCL        &password  *CHAR 256
+             DCL        &title     *CHAR 128
+             DCL        &desc      *CHAR 1024
+             DCL        &strdt     *CHAR 7 /* CYYMMDD */
+             DCL        &strtm     *CHAR 6
+             DCL        &enddt     *CHAR 7 /* CYYMMDD */
+             DCL        &endtm     *CHAR 6
+             DCL        &rem       *CHAR 4
+             DCL        &remmin    *DEC  5
+             DCL        &loc       *CHAR 128
+
+             DCL        &sYYYYMMDD *CHAR  8
+             DCL        &eYYYYMMDD *CHAR  8
+             DCL        &min       *CHAR  5
+
+             CVTDAT     DATE(&strdt) TOVAR(&sYYYYMMDD) FROMFMT(*CYMD) TOFMT(*YYMD) TOSEP(*NONE)
+             MONMSG     cpf0000
+
+             CVTDAT     DATE(&enddt) TOVAR(&eYYYYMMDD) FROMFMT(*CYMD) TOFMT(*YYMD) TOSEP(*NONE)
+             MONMSG     cpf0000
+
+             CHGVAR     VAR(&min) VALUE(&remmin)
+
+/* set JAVA CLASSPATH to point to our created JAR file */
+             ADDENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar')
+             MONMSG     cpf0000 EXEC(DO)
+                CHGENVVAR  ENVVAR(CLASSPATH) VALUE('/Google_Docs/GoogleDocs.jar')
+                MONMSG     cpf0000
+             ENDDO
+
+/* call get Google Apps List Documents API process */
+             CALL       PGM(GA4BEVNTR) PARM(&EMAIL &PASSWORD &TITLE &DESC &SYYYYMMDD &STRTM &EYYYYMMDD &ENDTM &REM +
+                          &MIN &LOC)
+
+
+             ENDPGM
