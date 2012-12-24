@@ -95,7 +95,7 @@ public class GA4BEvntJ {
 			System.out.println("description: " + description);
 			System.out.println("Starting: " + startTime.toString());
 			System.out.println("Ending: " + endTime.toString());
-			System.out.println("reminder: " + reminder + reminder.equalsIgnoreCase("*YES"));
+			System.out.println("reminder: " + reminder);
 			System.out.println("reminder Minutes: " + minutes);
 			System.out.println("location: " + location);
 			
