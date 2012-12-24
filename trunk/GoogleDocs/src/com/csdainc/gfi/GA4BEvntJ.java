@@ -8,19 +8,26 @@ import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.DateTime;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEventEntry;
+import com.google.gdata.data.extensions.Reminder;
+import com.google.gdata.data.extensions.Reminder.Method;
 import com.google.gdata.data.extensions.When;
+import com.google.gdata.data.extensions.Where;
 
-public class GputevtJ {
+public class GA4BEvntJ {
 
 	public static void main(String[] args) {
 
 		String account = args[0];
 		String password = args[1];
-		String description = args[2];
-		String strDt = args[3];
-		String strTm = args[4];
-		String endDt = args[5];
-		String endTm = args[6];     
+		String title = args[2];
+		String description = args[3];
+		String strDt = args[4];
+		String strTm = args[5];
+		String endDt = args[6];
+		String endTm = args[7];    
+		String reminder = args[8];
+		String reminderMinutes = args[9];
+		String location = args[10];
 
 		try {
 			// authenticate
@@ -37,6 +44,7 @@ public class GputevtJ {
 			int startHour = Integer.parseInt(strTm.substring(0,2));
 			int startMinute = Integer.parseInt(strTm.substring(2,4));
 			int startSeconds = Integer.parseInt(strTm.substring(4,6));
+			int minutes = Integer.parseInt(reminderMinutes);
 			Calendar startCalendar = Calendar.getInstance();
 			startCalendar.clear();
 			startCalendar.setTimeZone(TimeZone.getDefault());
@@ -56,7 +64,8 @@ public class GputevtJ {
 						
 			// set title
 			CalendarEventEntry myEntry = new CalendarEventEntry();
-			myEntry.setTitle(new PlainTextConstruct(description));
+			myEntry.setTitle(new PlainTextConstruct(title));
+			myEntry.setContent(new PlainTextConstruct(description));
 			
 			// set times
 			DateTime startTime = new DateTime(startCalendar.getTimeInMillis(), Calendar.ZONE_OFFSET);
@@ -66,12 +75,29 @@ public class GputevtJ {
 			eventTimes.setEndTime(endTime);
 			myEntry.addTime(eventTimes);
 
+			// set reminder
+			if (reminder.equals("*YES")) {
+				Reminder rem = new Reminder();
+				rem.setMethod(Method.EMAIL);
+				rem.setMinutes(minutes);
+				myEntry.getReminder().add(rem);
+			}
+			
+			// set location
+			Where where = new Where();
+			where.setValueString(location);
+			myEntry.getLocations().add(where);
+			
 			// send message
 			System.out.println("*** Adding Event ***" + account);
 			System.out.println("account: " + account);
+			System.out.println("title: " + title);
 			System.out.println("description: " + description);
 			System.out.println("Starting: " + startTime.toString());
 			System.out.println("Ending: " + endTime.toString());
+			System.out.println("reminder: " + reminder);
+			System.out.println("reminder Minutes: " + minutes);
+			System.out.println("location: " + location);
 			
 			// Send the request and receive the response:
 			calendarService.insert(calendarUrl, myEntry);
