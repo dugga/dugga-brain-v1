@@ -1,0 +1,76 @@
+.*‚/*-----------------------------------------------------------------*/
+.*‚/*  Create Instructions:                                           */
+.*‚/*                                                                 */
+.*‚/*  CRTPNLGRP PNLGRP(GA4BEVNTP) SRCFILE(QPNLSRC)                   */
+.*‚/*-----------------------------------------------------------------*/
+
+:pnlgrp.
+
+.*‚command help text
+
+:help name='GA4BEVNT'.
+GA4BEVNT - Help
+:P.
+The GA4BEVNT command allows you to interface with a specified Google
+Apps account and send a calendar event to the user's Google Calendar.
+:ehelp.
+
+.*‚command parameters help text
+:help name='GA4BEVNT/EMAIL'.
+Email (EMAIL) - Help
+:xh3.Email (EMAIL)
+:P.
+Specify the Google Account email address to use when sending the calendar event.
+:P.
+The email must already exist as a Google Apps account and is a required
+parameter.
+:lines.
+Example: :hp2.'MyAccount@Gmail.com':ehp2.
+:elines.
+:ehelp.
+
+:help name='GA4BEVNT/PASSWORD'.
+Password (PASSWORD) - Help
+:xh3.Password (PASSWORD)
+:P.
+Specify the Google Account password for the email address of the Google Apps
+account.
+:P.
+The password is a required parameter but is not displayed for security purposes.
+:ehelp.
+
+:help name='GA4BEVNT/DESC'.
+Description (DESC) - Help
+:xh3.Description (Desc)
+:P.
+Specify the description to be used for the calendar event.
+:ehelp.
+
+:help name='GA4BEVNT/STARTDATE'.
+Start date (STARTDATE) - Help
+:xh3.Start date (STARTDATE)
+:P.
+Specify the start date for the calendar event.
+:ehelp.
+
+:help name='GA4BEVNT/STARTTIME'.
+Stare time (STARTTIME) - Help
+:xh3.Start time (STARTTIME)
+:P.
+Specify the start time for the calendar event.
+:ehelp.
+
+:help name='GA4BEVNT/ENDDATE'.
+End date (ENDDATE) - Help
+:xh3.End date (ENDDATE)
+:P.
+Specify the end date for the calendar event.
+:ehelp.
+
+:help name='GA4BEVNT/ENDTIME'.
+End time (ENDTIME) - Help
+:xh3.End time (ENDTIME)
+:P.
+Specify the end time for the calendar event.
+:ehelp.
+:epnlgrp.
