@@ -1,0 +1,29 @@
+000100130821/* *-----------------------------------------------------------------*/
+000101130821/* *  Create Instructions:                                           */
+000102130821/* *                                                                 */
+000103130821/* *  CRTBNDCL PGM(GA4BEMAILC) SRCFILE(QCLSRC)                       */
+000104130821/* *-----------------------------------------------------------------*/
+000105130821             PGM        PARM(&EMAIL &PASSWORD &TOEMAIL &SUBJECT +
+000106130821                          &BODY &DOCUMENT &DIRECTORY)
+000107130821
+000108130821/*   program variables                                              */
+000109130821             DCL        VAR(&EMAIL)     TYPE(*CHAR) LEN(256)
+000110130821             DCL        VAR(&PASSWORD)  TYPE(*CHAR) LEN(256)
+000111130821             DCL        VAR(&TOEMAIL)   TYPE(*CHAR) LEN(256)
+000112130821             DCL        VAR(&SUBJECT)   TYPE(*CHAR) LEN(128)
+000113130821             DCL        VAR(&BODY)      TYPE(*CHAR) LEN(512)
+000114130821             DCL        VAR(&DIRECTORY) TYPE(*CHAR) LEN(128)
+000115130821             DCL        VAR(&DOCUMENT)  TYPE(*CHAR) LEN(128)
+000116130821
+000117130821/*   set JAVA CLASSPATH to point to our created JAR file            */
+000118130821             ADDENVVAR  ENVVAR(CLASSPATH) +
+000119130821                          VALUE('/Google_Docs/GoogleDocs.jar') +
+000120130821                          REPLACE(*YES)
+000121130821             MONMSG     MSGID(CPF0000)
+000126130821
+000127130821/*   call Google Apps Email API process                             */
+000128130821             CALL       PGM(GA4BEMAILR) PARM(&EMAIL &PASSWORD +
+000129130821                          &TOEMAIL &SUBJECT &BODY &DOCUMENT &DIRECTORY)
+000130130821
+000131130821             ENDPGM
+000132130821
