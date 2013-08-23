@@ -1,0 +1,85 @@
+000100130821.* /*-----------------------------------------------------------------*/
+000101130821.* /*  Create Instructions:                                           */
+000102130821.* /*                                                                 */
+000103130821.* /*  CRTPNLGRP PNLGRP(GA4BEMAILP) SRCFILE(QPNLSRC)                  */
+000104130821.* /*-----------------------------------------------------------------*/
+000105130821
+000106130821:pnlgrp.
+000107130821
+000108130821.*  command help text
+000109130821
+000110130821:help name='GA4BEMAIL'.
+000111130821GA4BEMAIL - Help
+000112130821:P.
+000113130821The GA4BEMAIL command allows you to interface with a specified Google
+000114130821Apps account to send an email to a specified email account and optionally
+000115130821include a subject line, email body and document attachment.
+000116130821:ehelp.
+000117130821
+000118130821.* command parameters help text
+000119130821:help name='GA4BEMAIL/EMAIL'.
+000120130821Email (EMAIL) - Help
+000121130821:xh3.Email (EMAIL)
+000122130821:P.
+000123130821Specify the Google Account email address to use when EMAILing the document.
+000124130821:P.
+000125130821The email must already exist as a Google Apps account and is a required
+000126130821parameter.
+000127130821:lines.
+000128130821Example: :hp2.'MyAccount@Gmail.com':ehp2.
+000129130821:elines.
+000130130821:ehelp.
+000131130821
+000132130821:help name='GA4BEMAIL/PASSWORD'.
+000133130821Password (PASSWORD) - Help
+000134130821:xh3.Password (PASSWORD)
+000135130821:P.
+000136130821Specify the Google Account password for the email address of the Google Apps
+000137130821account.
+000138130821:P.
+000139130821The password is a required parameter but is not displayed for security purposes.
+000140130821:ehelp.
+000141130821
+000142130821.* command parameters help text
+000143130821:help name='GA4BEMAIL/TOEMAIL'.
+000144130821To Email (TOEMAIL) - Help
+000145130821:xh3.To Email (TOEMAIL)
+000146130821:P.
+000147130821Specify the email address to send the email to.
+000148130821:P.
+000149130821The email must be a valid email address.
+000150130821:lines.
+000151130821Example: :hp2.'MyAccount@Gmail.com':ehp2.
+000152130821:elines.
+000153130821:ehelp.
+000154130821
+000155130821:help name='GA4BEMAIL/SUBJECT'.
+000156130821Email subject (SUBJECT) - Help
+000157130821:xh3.Email subject (SUBJECT)
+000158130821:P.
+000159130821Specifies an optional subject of the email.
+000160130821:ehelp.
+000161130821
+000162130821:help name='GA4BEMAIL/BODY'.
+000163130821Email body (BODY) - Help
+000164130821:xh3.Email body (BODY)
+000165130821:P.
+000166130821Specifies an optional email body text for the email.
+000167130821:ehelp.
+000168130821
+000169130821:help name='GA4BEMAIL/DOCUMENT'.
+000170130821Document (DOCUMENT) - Help
+000171130821:xh3.Document (DOCUMENT)
+000172130821:P.
+000173130821Specifies an optional attachment document name to be sent.
+000174130821:ehelp.
+000175130821
+000176130821:help name='GA4BEMAIL/DIRECTORY'.
+000177130821Directory (DIRECTORY) - Help
+000178130821:xh3.Directory (DIRECTORY)
+000179130821:P.
+000180130821Specifies the directory in the IFS the optional attachment document is
+000181130821stored in.
+000182130821:ehelp.
+000183130821:epnlgrp.
+000184130821
