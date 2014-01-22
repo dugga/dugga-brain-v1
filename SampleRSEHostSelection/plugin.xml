@@ -1,0 +1,19 @@
+<plugin>
+<!-- Remote Object popup menu actions -->
+<extension point="org.eclipse.ui.popupMenus">
+
+ 	<objectContribution
+		objectClass="org.eclipse.rse.core.model.IHost"
+		id="sampleRSEHostSelection">
+		<filter name="systemType" value="IBM i"/>
+		<action
+			label="Sample RSE Host Selection"
+			tooltip="Sample RSE Host Selection Tooltip"
+			class="com.dugga.sampleRSEHostSelection.SampleRSEHostSelection"
+			enablesFor="+"
+			id="com.dugga.SampleRSEHostSelection">
+		</action>
+	</objectContribution>
+</extension>
+
+</plugin>
