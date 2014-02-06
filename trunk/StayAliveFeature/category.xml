@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.dugga.StayAliveFeature_1.0.0.qualifier.jar" id="com.dugga.StayAliveFeature" version="1.0.0.qualifier">
+      <category name="dugga"/>
+   </feature>
+   <category-def name="dugga" label="Stay Alive Category"/>
+</site>
