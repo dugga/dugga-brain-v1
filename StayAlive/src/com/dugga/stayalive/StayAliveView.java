@@ -179,6 +179,7 @@ public class StayAliveView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		activeHosts.clear();
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
+		setContentDescription("Stay Alive View");
 		createColumns(parent, viewer);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
@@ -263,7 +264,7 @@ public class StayAliveView extends ViewPart {
 		};
 		startMonitor.setText("Start Monitor");
 		startMonitor.setToolTipText("Start Monitor");
-		startMonitor.setEnabled(true);
+		startMonitor.setEnabled(!isStayAliveJobActive());
 		startMonitor.setImageDescriptor(Activator.getImageDescriptor(Activator.IMAGE_RUN));
 
 		// Stop the monitor
@@ -279,7 +280,7 @@ public class StayAliveView extends ViewPart {
 		};
 		stopMonitor.setText("Stop Monitor");
 		stopMonitor.setToolTipText("Stop Monitor");
-		stopMonitor.setEnabled(false);
+		stopMonitor.setEnabled(isStayAliveJobActive());
 		stopMonitor.setImageDescriptor(Activator.getImageDescriptor(Activator.IMAGE_STOP));
 
 		// Set properties
@@ -389,9 +390,9 @@ public class StayAliveView extends ViewPart {
 		
 		QualifiedName jobHosts = new QualifiedName("com.dugga.StayAlive", "activeHosts");
 		Object jobProps = getStayAliveJob().getProperty(jobHosts);
-		ArrayList<Host> activeHosts = new ArrayList<Host>();
-		activeHosts.addAll((Collection<? extends Host>) jobProps);
-		return activeHosts.toString().contains(hostName);
+		ArrayList<Host> jobActiveHosts = (ArrayList<Host>)getStayAliveJob().getProperty(jobHosts);
+		if (jobActiveHosts == null || jobActiveHosts.size() == 0) return(false);
+		return jobActiveHosts.toString().contains(hostName);
 	}
 	
 	/*

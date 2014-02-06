@@ -19,4 +19,6 @@ Import-Package:
  org.eclipse.rse.core.model,
  org.eclipse.rse.services,
  org.eclipse.rse.services.clientserver.messages,
- org.eclipse.rse.ui
+ org.eclipse.rse.ui,
+ org.eclipse.ui.console
+Export-Package: com.dugga.stayalive
