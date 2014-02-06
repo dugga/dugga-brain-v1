@@ -21,6 +21,7 @@ public class StayAliveJob {
 	private boolean running = false;
 	private int wait = 300000;
 	private String refreshInterval = "";
+	private StayAliveConsole messageConsole = new StayAliveConsole();
 
 	/*
 	 * Constructor
@@ -46,14 +47,15 @@ public class StayAliveJob {
 			protected IStatus run(IProgressMonitor monitor) {
 				QualifiedName qualifiedName = new QualifiedName("com.dugga.StayAlive", "activeHosts");
 				setProperty(qualifiedName, hosts);
+				Date now = new Date();
 				
 				if (!running) {
-					System.out.println("Stay alive monitor started with a wait time of " + refreshInterval + " minutes.");
+					messageConsole.write("Stay alive monitor started on " + now.toString() + " with a wait time of " + refreshInterval + " minutes.");
 					running = true;
 				}
 				try {
 					if (monitor.isCanceled()) {
-						System.out.println("Stay alive monitor ended.");
+						messageConsole.write("Stay alive monitor ended.");
 						return Status.CANCEL_STATUS;
 					}
 					
@@ -61,10 +63,9 @@ public class StayAliveJob {
 					while (hostIterator.hasNext()) {
 						IBMiConnection ibmi = IBMiConnection.getConnection(hostIterator.next());
 						if (ibmi.isConnected()) {
-							System.out.println("System: " + ibmi.getHostName() + " connected at system time: " + getSystemTime(ibmi));
+							messageConsole.write("System: " + ibmi.getHostName() + " connected at system time: " + getSystemTime(ibmi));
 						} else {
-							Date now = new Date();
-							System.out.println("System: " + ibmi.getHostName() + " not connected at " + now.toString());
+							messageConsole.write("System: " + ibmi.getHostName() + " not connected at " + now.toString());
 						}
 					}
 				} catch (Exception e) {
@@ -82,7 +83,7 @@ public class StayAliveJob {
 			@Override
 			public void done(IJobChangeEvent event) {
 				if (event.getResult().getSeverity() == IStatus.CANCEL) {
-					System.out.println("Stay alive monitor ended.");
+					messageConsole.write("Stay alive monitor ended.");
 				}
 			}
 		});
