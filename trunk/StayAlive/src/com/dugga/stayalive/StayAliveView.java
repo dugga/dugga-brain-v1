@@ -1,7 +1,6 @@
 package com.dugga.stayalive;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.QualifiedName;
@@ -58,7 +57,7 @@ public class StayAliveView extends ViewPart {
 	private Action stopMonitor;
 	private Action setProperties;
 	private StayAliveJob stayAliveJob;
-	private ArrayList<Host> activeHosts = new ArrayList<Host>();
+	private ArrayList<StayAliveHost> stayAliveHosts = new ArrayList<StayAliveHost>();
 
 	/**
 	 * The constructor.
@@ -95,12 +94,15 @@ public class StayAliveView extends ViewPart {
 	}
 
 	private void createColumns(Composite parent, TableViewer viewer2) {
-		String[] titles = { "Connection", "Include in Monitor", "Monitoring" };
-		int[] bounds = { 200, 150, 150 };
+		String[] titles = { "Connection", "Include in Monitor", "Monitoring", "Source Library", "Source File", "Source Member" };
+		int[] bounds = { 200, 150, 150, 150, 150, 150 };
 
 		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 		col = createTableViewerColumn(titles[1], bounds[1], 1);
 		col = createTableViewerColumn(titles[2], bounds[2], 2);
+		col = createTableViewerColumn(titles[3], bounds[3], 3);
+		col = createTableViewerColumn(titles[4], bounds[4], 4);
+		col = createTableViewerColumn(titles[5], bounds[5], 5);
 	}
 
 	/*
@@ -128,18 +130,28 @@ public class StayAliveView extends ViewPart {
 			String result = "";
 			if (obj instanceof Host) {
 				Host host = (Host)obj;
+				StayAliveHost stayAliveHost = new StayAliveHost(host);
 				switch (columnIndex) {
 				case 0: 
 					result = host.getAliasName();
-					if (getActivated(host.getAliasName()).equals("true")) {
-						activeHosts.add(host);
+					if (stayAliveHost.getInclude()) {
+						stayAliveHosts.add(stayAliveHost);
 					}
 					break;
 				case 1: 
-					result = getActivated(host.getAliasName());
+					result = String.valueOf(stayAliveHost.getInclude());
 					break;
 				case 2: 
 					result = String.valueOf(isMonitored(host.getAliasName()));
+					break;
+				case 3: 
+					result = stayAliveHost.getSourceLibrary();
+					break;
+				case 4: 
+					result = stayAliveHost.getSourceFile();
+					break;
+				case 5: 
+					result = stayAliveHost.getSourceMember();
 					break;
 				default:
 					//should not reach here
@@ -177,7 +189,7 @@ public class StayAliveView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		activeHosts.clear();
+		stayAliveHosts.clear();
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL);
 		setContentDescription("Stay Alive View");
 		createColumns(parent, viewer);
@@ -211,7 +223,7 @@ public class StayAliveView extends ViewPart {
 					Object obj = selectionIterator.next();
 					if (obj instanceof Host) {
 						Host selectedHost = (Host) obj;
-						toggleActivated(selectedHost.getAliasName());
+						toggleInclude(selectedHost.getAliasName());
 					}
 				}
 				refreshView();
@@ -229,11 +241,15 @@ public class StayAliveView extends ViewPart {
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
 				if (obj instanceof Host) {
 					Host selectedHost = (Host) obj;
-					toggleActivated(selectedHost.getAliasName());
+					StayAliveHost stayAliveHost = new StayAliveHost(selectedHost);
+					StayAliveHostPropertiesDialog hostPropertiesDialog = new StayAliveHostPropertiesDialog(SystemBasePlugin.getActiveWorkbenchShell(), stayAliveHost);
+					hostPropertiesDialog.open();
 					refreshView();
 				}
 			}
 		};
+		doubleClickAction.setText("Connection Properties");
+		doubleClickAction.setToolTipText("Connection Properties");
 
 		// refresh the table
 		refresh = new Action() {
@@ -250,12 +266,12 @@ public class StayAliveView extends ViewPart {
 		startMonitor = new Action() {
 			@Override
 			public void run() {
-				if (activeHosts.size() == 0) {
-					MessageDialog.openWarning(SystemBasePlugin.getActiveWorkbenchShell(), "Start", "There are no hosts activated.");
+				if (stayAliveHosts.size() == 0) {
+					MessageDialog.openWarning(SystemBasePlugin.getActiveWorkbenchShell(), "Start", "There are no hosts included.");
 				} else {
 					if (!isStayAliveJobActive()) {
 						stayAliveJob = new StayAliveJob();
-						stayAliveJob.setHosts(activeHosts);
+						stayAliveJob.setHosts(stayAliveHosts);
 						stayAliveJob.run();
 					}
 				}
@@ -341,6 +357,7 @@ public class StayAliveView extends ViewPart {
 
 	private void fillContextMenu(IMenuManager manager) {
 		manager.add(toggleActivation);
+		manager.add(doubleClickAction);
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
@@ -374,15 +391,6 @@ public class StayAliveView extends ViewPart {
 	}
 
 	/*
-	 * Using the hostName, read the properties to determine if the system
-	 * should be monitored when the monitor is started.
-	 */
-	private String getActivated(String hostName) {
-		StayAliveProperties hostProperties = new StayAliveProperties(hostName);
-		return hostProperties.getProperty("activated", "false");
-	}
-
-	/*
 	 * Read the active job to see if a particular system is being monitored.
 	 */
 	private boolean isMonitored(String hostName) {
@@ -390,20 +398,28 @@ public class StayAliveView extends ViewPart {
 		
 		QualifiedName jobHosts = new QualifiedName("com.dugga.StayAlive", "activeHosts");
 		Object jobProps = getStayAliveJob().getProperty(jobHosts);
-		ArrayList<Host> jobActiveHosts = (ArrayList<Host>)getStayAliveJob().getProperty(jobHosts);
+		ArrayList<StayAliveHost> jobActiveHosts = (ArrayList<StayAliveHost>)getStayAliveJob().getProperty(jobHosts);
 		if (jobActiveHosts == null || jobActiveHosts.size() == 0) return(false);
-		return jobActiveHosts.toString().contains(hostName);
+		Iterator listIter = jobActiveHosts.iterator();
+		while (listIter.hasNext()) {
+			StayAliveHost activeHost = (StayAliveHost) listIter.next();
+			if (activeHost.getHost().getAliasName().equals(hostName)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/*
-	 * Toggles the activated flag in the system properties file
+	 * Toggles the include flag in the system properties file
 	 */
-	private void toggleActivated(String hostName) {
+	private void toggleInclude(String hostName) {
 		StayAliveProperties hostProperties = new StayAliveProperties(hostName);
-		if (hostProperties.getProperty("activated", "false").equals("true")) {
-			hostProperties.setProperty("activated", "false");
+		if (hostProperties.getProperty("include", "false").equals("true")) {
+			hostProperties.setProperty("include", "false");
 		} else {
-			hostProperties.setProperty("activated", "true");
+			hostProperties.setProperty("include", "true");
 		}
 	}
 
@@ -411,7 +427,7 @@ public class StayAliveView extends ViewPart {
 	 * refresh the view
 	 */
 	private void refreshView() {
-		activeHosts.clear();
+		stayAliveHosts.clear();
 		if (!isStayAliveJobActive()) {
 			startMonitor.setEnabled(true);
 			stopMonitor.setEnabled(false);
