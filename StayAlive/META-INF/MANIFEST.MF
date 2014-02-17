@@ -7,11 +7,19 @@ Bundle-Activator: com.dugga.stayalive.Activator
 Bundle-Vendor: dugga
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- com.ibm.etools.iseries.services.qsys
+ com.ibm.etools.iseries.services.qsys,
+ com.ibm.etools.iseries.rse.ui,
+ org.eclipse.rse.core,
+ org.eclipse.rse.core,
+ org.eclipse.rse.core,
+ org.eclipse.rse.core,
+ com.ibm.etools.iseries.toolbox
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: 
  com.ibm.as400.access,
+ com.ibm.etools.iseries.connectorservice,
+ com.ibm.etools.iseries.rse.ui,
  com.ibm.etools.iseries.subsystems.qsys.api,
  com.ibm.etools.iseries.toolbox,
  org.eclipse.core.resources,
