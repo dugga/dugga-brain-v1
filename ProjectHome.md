@@ -1,0 +1,1 @@
+A brain dump of various widgets that I might someday need
